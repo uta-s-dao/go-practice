@@ -1,0 +1,26 @@
+{
+		 "id": 1,
+		 "content": "Hello World",
+		 "author": {
+		 		 "id": 2,
+		 		 "name": "Sau Sheong"
+		 },
+		 "comments": [
+		 		 {
+		 		 		 "id": 1,
+		 		 		 "content": "Good post",
+		 		 		 "author": {
+		 		 		 		 "id": 3,
+		 		 		 		 "name": "Joe"
+		 		 		 }
+		 		 },
+		 		 {
+		 		 		 "id": 2,
+		 		 		 "content": "Thanks for the info",
+		 		 		 "author": {
+		 		 		 		 "id": 4,
+		 		 		 		 "name": "Mary"
+		 		 		 }
+		 		 }
+		 ]
+}
