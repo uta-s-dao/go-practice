@@ -10,7 +10,7 @@ import (
 type Post struct {
 	Id        int
 	Content   string
-	Author    string `sql: "not null"`
+	Author    string `sql:"not null"`
 	Comments  []Comment
 	CreatedAt string
 }
@@ -18,7 +18,7 @@ type Post struct {
 type Comment struct {
 	Id        int
 	Content   string
-	Author    string `sql: "not null"`
+	Author    string `sql:"not null"`
 	PostId    int
 	CreatedAt time.Time
 }
