@@ -2,6 +2,7 @@ package main
 
 import (
 	"testing"
+	"time"
 )
 
 func TestDecode(t *testing.T) {
@@ -23,4 +24,11 @@ func TestDecode(t *testing.T) {
 
 func TestEncode(t *testing.T) {
 	t.Skip("Skipping TestEncode")
+}
+
+func TestLongRunning(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
+	time.Sleep(10 * time.Second)
 }
