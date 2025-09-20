@@ -41,3 +41,20 @@ func (post *Post) Delete() (err error) {
 	_, err = Db.Exec("delete from posts where id=$1", post.Id)
 	return
 }
+
+func (post *Post) fetch(id int) (err error) {
+	err = post.Db.QueryRow("select id,content,author from posts where id=$1", id).Scan(&post.Id, &post.Content, &post.Author)
+	return
+}
+
+func (post *Post) create() (err error) {
+	return
+}
+
+func (post *Post) update() (err error) {
+	return
+}
+
+func (post *Post) delete() (err error) {
+	return
+}
