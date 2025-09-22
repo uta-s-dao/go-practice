@@ -38,10 +38,10 @@ func handleRequest(t Text) http.HandlerFunc {
 		switch r.Method {
 		case "GET":
 			err = handleGet(w, r, t)
-			// case "POST":
-			// 	err = handlePost(w, r, t)
-			// case "PUT":
-			// 	err = handlePut(w, r, t)
+		// case "POST":
+		// 	err = handlePost(w, r, t)
+		case "PUT":
+			err = handlePut(w, r, t)
 			// case "DELETE":
 			// 	err = handleDelete(w, r, t)
 		}
@@ -85,27 +85,28 @@ func handlePost(w http.ResponseWriter, r *http.Request) (err error) {
 	return
 }
 
-func handlePut(w http.ResponseWriter, r *http.Request) (err error) {
+func handlePut(w http.ResponseWriter, r *http.Request, t Text) (err error) {
 	id, err := strconv.Atoi(path.Base(r.URL.Path))
 	if err != nil {
 		return
 	}
-	post, err := retrieve(id)
-	if err != nil {
-		return
-	}
+
 	len := r.ContentLength
 	body := make([]byte, len)
 	r.Body.Read(body)
-	json.Unmarshal(body, &post)
-	err = post.Update()
-	if err != nil {
-		return
+
+	// Text interface経由でデータを更新
+	json.Unmarshal(body, t)
+
+	// IDを設定（FakePostで必要）
+	if fp, ok := t.(*FakePost); ok {
+		fp.Id = id
 	}
+	t.update()
+
 	w.WriteHeader(200)
 	return
 }
-
 func handleDelete(w http.ResponseWriter, r *http.Request) (err error) {
 	id, err := strconv.Atoi(path.Base(r.URL.Path))
 	if err != nil {
