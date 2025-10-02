@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mosaic - Upload Image</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      .upload-form {
+        border: 2px solid #ddd;
+        padding: 30px;
+        border-radius: 8px;
+      }
+      input[type="file"] {
+        margin: 10px 0;
+      }
+      input[type="number"] {
+        width: 100px;
+        padding: 5px;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Create Photo Mosaic</h1>
+    <div class="upload-form">
+      <form action="/mosaic" method="POST" enctype="multipart/form-data">
+        <label for="image">Select Image:</label><br />
+        <input
+          type="file"
+          name="image"
+          id="image"
+          accept="image/*"
+          required
+        /><br /><br />
+
+        <label for="tile_size">Tile Size (pixels):</label><br />
+        <input
+          type="number"
+          name="tile_size"
+          id="tile_size"
+          value="50"
+          min="10"
+          max="200"
+        /><br /><br />
+
+        <button type="submit">Generate Mosaic</button>
+      </form>
+    </div>
+  </body>
+</html>
