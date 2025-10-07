@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"path"
 	"strconv"
@@ -27,14 +26,10 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleGet(w http.ResponseWriter, r *http.Request) (err error) {
-	id, err := strconv.Atoi(path.Base(r.URL.Path))
-	fmt.Println(r.URL.Path)
-	fmt.Println(r.URL)
-
 	if err != nil {
 		return
 	}
-	todos, err := retrieve(id)
+	todos, err := getAll()
 	if err != nil {
 		return
 	}
