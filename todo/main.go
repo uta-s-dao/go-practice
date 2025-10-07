@@ -11,7 +11,10 @@ func todo(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("cannot parse todofiles")
 	}
-	list := []todoList{{Name: "guiter", Status: "complete"}, {Name: "dinner", Status: "todo"}}
+	list, err := getAll()
+	if err != nil {
+		fmt.Println("cannnot get todolist")
+	}
 	fmt.Println(list)
 	if err != nil {
 		fmt.Println("cannot marshal struct to json")
