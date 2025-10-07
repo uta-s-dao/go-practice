@@ -1,15 +1,80 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
     <title>Todo</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Todo List</h1>
-    <ul>
-      {{range .}}
-      <li>{{.Name}} - {{.Status}}</li>
-      {{end}}
-    </ul>
+    <div class="flex">
+      <div>
+        <h1>Todo List</h1>
+        <ul id="todoList">
+          {{range .}}
+          <li data-id="{{.Id}}" data-name="{{.Name}}" data-status="{{.Status}}">
+            {{.Name}} - {{.Status}}
+            <button class="update-btn">更新</button>
+            <button class="delete-btn">削除</button>
+          </li>
+          {{end}}
+        </ul>
+      </div>
+      <div>
+        <h1>Add Todo</h1>
+        <form id="addForm">
+          <input type="text" id="name" placeholder="名前" required>
+          <select id="status">
+            <option value="todo">todo</option>
+            <option value="done">done</option>
+          </select>
+          <button type="submit">追加</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // 追加
+      document.getElementById('addForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await fetch('/post/', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            name: document.getElementById('name').value,
+            status: document.getElementById('status').value
+          })
+        });
+        location.reload();
+      });
+
+      // 更新ボタンのイベント
+      document.addEventListener('click', async (e) => {
+        if (e.target.classList.contains('update-btn')) {
+          const li = e.target.closest('li');
+          const id = li.dataset.id;
+          const name = li.dataset.name;
+          const status = li.dataset.status;
+          const newStatus = status === 'todo' ? 'done' : 'todo';
+
+          await fetch(`/post/${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name, status: newStatus})
+          });
+          location.reload();
+        }
+      });
+
+      // 削除ボタンのイベント
+      document.addEventListener('click', async (e) => {
+        if (e.target.classList.contains('delete-btn')) {
+          const li = e.target.closest('li');
+          const id = li.dataset.id;
+
+          await fetch(`/post/${id}`, {method: 'DELETE'});
+          location.reload();
+        }
+      });
+    </script>
   </body>
 </html>

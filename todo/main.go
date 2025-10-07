@@ -26,6 +26,7 @@ func main() {
 	server := http.Server{
 		Addr: "127.0.0.1:8080",
 	}
+	http.Handle("/style.css", http.FileServer(http.Dir(".")))
 	http.HandleFunc("/todo", todo)
 	http.HandleFunc("/post/", handleRequest)
 	fmt.Println("server on runnning:http://127.0.0.1:8080/todo/ and http://127.0.0.1:8080/post/")
