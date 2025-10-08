@@ -2,33 +2,52 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="flex">
-      <div>
-        <h1>Todo List</h1>
-        <ul id="todoList">
-          {{range .}}
-          <li data-id="{{.Id}}" data-name="{{.Name}}" data-status="{{.Status}}">
-            {{.Name}} - {{.Status}}
-            <button class="update-btn">更新</button>
-            <button class="delete-btn">削除</button>
-          </li>
-          {{end}}
-        </ul>
-      </div>
-      <div>
-        <h1>Add Todo</h1>
-        <form id="addForm">
-          <input type="text" id="name" placeholder="名前" required>
-          <select id="status">
-            <option value="todo">todo</option>
-            <option value="done">done</option>
-          </select>
-          <button type="submit">追加</button>
-        </form>
+    <div class="container">
+      <header>
+        <h1 class="main-title">✨ My Todo App</h1>
+      </header>
+
+      <div class="flex">
+        <div class="card">
+          <h2 class="card-title">📋 Todo List</h2>
+          <ul id="todoList">
+            {{range .}}
+            <li class="todo-item {{if eq .Status "done"}}completed{{end}}" data-id="{{.Id}}" data-name="{{.Name}}" data-status="{{.Status}}">
+              <div class="todo-content">
+                <span class="todo-name">{{.Name}}</span>
+                <span class="status-badge {{.Status}}">{{.Status}}</span>
+              </div>
+              <div class="todo-actions">
+                <button class="update-btn btn-icon" title="ステータス変更">{{if eq .Status "done"}}↩️{{else}}✓{{end}}</button>
+                <button class="delete-btn btn-icon" title="削除">🗑️</button>
+              </div>
+            </li>
+            {{end}}
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">➕ Add New Todo</h2>
+          <form id="addForm">
+            <div class="form-group">
+              <label for="name">タスク名</label>
+              <input type="text" id="name" placeholder="新しいタスクを入力..." required>
+            </div>
+            <div class="form-group">
+              <label for="status">ステータス</label>
+              <select id="status">
+                <option value="todo">📝 Todo</option>
+                <option value="done">✅ Done</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary">追加する</button>
+          </form>
+        </div>
       </div>
     </div>
 
